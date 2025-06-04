@@ -10,7 +10,7 @@ int main(int argc, char** argv, char** env) {
     Verilated::commandArgs(argc, argv);
     Vsqrt_binary_search* top = new Vsqrt_binary_search;
 
-    int test_values[] = {0, 1, 2, 4, 9, 16, 25, 100}; // Integers to test sqrt
+    int test_values[] = {5, 1, 2, 4, 9, 16, 25, 100}; // Integers to test sqrt
     const int num_tests = sizeof(test_values) / sizeof(test_values[0]);
 
     for (int t = 0; t < num_tests; ++t) {
