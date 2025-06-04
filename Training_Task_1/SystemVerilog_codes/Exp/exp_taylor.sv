@@ -6,17 +6,13 @@ module exp_taylor #(
     input logic signed [INT_WIDTH+FRAC_WIDTH-1:0] x,  // Fixed-point input (Q format)
     output logic signed [INT_WIDTH+FRAC_WIDTH-1:0] result  // Fixed-point output
 );
-
     // Total width for fixed-point calculations
     localparam TOTAL_WIDTH = INT_WIDTH + FRAC_WIDTH;
-    
     // Internal registers for calculations
     logic signed [TOTAL_WIDTH-1:0] term [0:TERMS-1];
     logic signed [TOTAL_WIDTH-1:0] factorial [0:TERMS-1];
     logic signed [TOTAL_WIDTH-1:0] x_power [0:TERMS-1];
     logic signed [TOTAL_WIDTH-1:0] sum;
-    
-    
     always_comb begin
         factorial[0] = 1 << FRAC_WIDTH;  // 1.0 in fixed-point
         factorial[1] = 1 << FRAC_WIDTH;   // 1.0
@@ -28,7 +24,6 @@ module exp_taylor #(
         factorial[7] = 5040 << FRAC_WIDTH;  // 5040.0
         // Add more if using more terms
     end
-    
     // Calculate x^n terms
     always_comb begin
         x_power[0] = 1 << FRAC_WIDTH;  // x^0 = 1.0
@@ -38,7 +33,6 @@ module exp_taylor #(
             x_power[i] = (x_power[i-1] * x) >>> FRAC_WIDTH;
         end
     end
-    
     // Calculate each term in the series: x^n / n!
     always_comb begin
         for (int i = 0; i < TERMS; i++) begin
@@ -46,7 +40,6 @@ module exp_taylor #(
             term[i] = (x_power[i] << FRAC_WIDTH) / factorial[i];
         end
     end
-    
     // Sum all terms
     always_comb begin
         sum = term[0];
@@ -55,5 +48,4 @@ module exp_taylor #(
         end
         result = sum;
     end
-
 endmodule
