@@ -16,8 +16,7 @@ module exp_taylor #(
     logic signed [TOTAL_WIDTH-1:0] x_power [0:TERMS-1];
     logic signed [TOTAL_WIDTH-1:0] sum;
     
-    // Factorial values pre-calculated (fixed-point representation)
-    // Note: Factorials grow quickly, so we need to scale them appropriately
+    
     always_comb begin
         factorial[0] = 1 << FRAC_WIDTH;  // 1.0 in fixed-point
         factorial[1] = 1 << FRAC_WIDTH;   // 1.0
